@@ -1,0 +1,21 @@
+$def with(gallery_list, new_table, random_table)
+<div class="left_thin">
+	<h3>Navigation</h3>
+	<center><p><a href="/">Main Page</a> / <a href="/manual">Manual</a></p></center>
+
+	<h3>List</h3>
+    <table id="gallery_list" width="200" border="1" align="center">
+	    <thead><td>User</td><td>Avatars</td></thead>
+		$:gallery_list
+	</table>
+</div>
+<div class="right_wide">
+	<h3>New Uploads</h3>
+	<table id="avatars">
+		$:new_table
+	</table>
+	<h3>Random Selection</h3>
+	<table id="avatars">
+		$:random_table
+	</table>
+</div>

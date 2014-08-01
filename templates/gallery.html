@@ -1,0 +1,54 @@
+$def with(user, table)
+<div class="left">
+	<h3>User's Message</h3>
+	$if user.message:
+		$user.message
+	$else:
+		[user hasn't specified a gallery message]
+</div>
+<div class="right">
+	<h3>Stats</h3>
+	User has $user.num_active_avatars active avatars
+	($user.num_avatars total),
+	mostly sized $user.common_size
+	<h3>Links</h3>
+	<center>
+	<a href="/">Main Page</a> | <a href="/gallery">Gallery</a> | <a href="/timeline/${user.username}.jpg">Timeline Cover</a>
+	</center>
+	<center>
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-9027476807739652";
+/* Rav Usergal */
+google_ad_slot = "8812138810";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+	</center>
+</div>
+<div class="all">
+	<h3>Avatar List</h3>
+	<table id="avatars">
+		<tr>
+		$:table
+		</tr>
+	</table>
+</div>
+
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-9027476807739652";
+/* Rav User Gallery (Wide) */
+google_ad_slot = "1986339409";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</center>
+<br>

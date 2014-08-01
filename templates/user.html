@@ -1,0 +1,47 @@
+$def with(user, avatars)
+<div class="left">
+	<h3>Upload</h3>
+	<center>
+		<form enctype='multipart/form-data' action='upload' method='POST'>
+			<input name='avatar_data' type='file'>
+			<input type='submit' value='Upload'>
+		</form>
+	</center>
+
+	<h3>Info</h3>
+	<center>
+		<p>Link to avatar: <a href="http://rav.shishnet.org/${user.username}.png">$#
+		http://rav.shishnet.org/${user.username}.png</a>
+		<br>Link to gallery: <a href="http://rav.shishnet.org/${user.username}.html">$#
+		http://rav.shishnet.org/${user.username}.html</a>
+		<br><a href="/timeline/${user.username}.jpg">Facebook Timeline Cover</a>
+		</p>
+		<p><a href="/">Main Page</a> | <a href="logout">Log Out</a></p>
+	</center>
+</div>
+<div class="right">
+	<h3>Settings</h3>
+	<center>
+	<form action="settings" method="POST">
+		<table class="form">
+			<tr>
+				<td>Gallery message:</td>
+				<td><textarea name="message" rows="4" cols="50">$user.message</textarea></td>
+			</tr>
+			<tr>
+				<td>Email</td>
+				<td><input type="text" name="email" value="$user.email"></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="Set"></td>
+			</td>
+		</table>
+	</form>
+	</center>
+</div>
+<div class="all">
+	<h3>Avatars</h3>
+	<table id="avatars">
+		$:avatars
+	</table>
+</div>

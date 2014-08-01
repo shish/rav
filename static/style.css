@@ -1,0 +1,80 @@
+BODY {background: #EEE;}
+
+H1 {margin-top: 0px;margin-bottom: 0px;}
+H2 {margin-top: 32px;}
+
+H1, H2, H3, #footer {
+	text-align: center;
+	clear: both;
+	border: 1px solid #BBB;
+	background: #DDD;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	-webkit-box-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+	-moz-box-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+}
+#container {
+	margin: auto;
+	max-width: 1000px;
+}
+#footer {
+	font-size: 0.75em;
+	padding: 0.5em;
+}
+#nav {
+	margin-top: 16px;
+	display: block;
+	margin: auto;
+	padding: 0px;
+	text-align: center;
+}
+#nav SPAN {
+	margin: 0px;
+	padding: 4px;
+}
+
+#examples {
+	width: 100%;
+}
+#examples TD {
+	text-align: center;
+}
+
+#login TD {
+	text-align: center;
+}
+#login INPUT {
+	width: 100%;
+}
+
+.left {width: 49%; float: left;}
+.left_thin {width: 24%; float: left;}
+.right {width: 49%; float: right;}
+.right_wide {width: 74%; float: right;}
+.all {clear: both;}
+
+.left, .right, .all, .left_thin, .right_wide {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.enabled {}
+.disabled {background: #CCC;}
+
+#avatars {
+	width: 100%;
+}
+#avatars TD {
+	text-align: center;
+	font-size: 0.8em;
+	width: 20%;
+	padding: 8px;
+}
+#avatars TD IMG {
+	max-width: 256px;
+	max-height: 256px;
+}
+
+.form INPUT {
+	width: 100%;
+}

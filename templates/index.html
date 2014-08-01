@@ -1,0 +1,44 @@
+$def with(username, avatars)
+<div class="left_thin">
+	$if username:
+		<h3>Logged In</h3>
+		Logged in as $username
+		<br><a href="user">Edit Avatars</a> | <a href="logout">Log Out</a>
+	$else:
+		<h3>Log In</h3>
+		<center>
+		<form action="login" method="POST">
+			<table id="login">
+				<tr><td>Username</td><td><input type="text" name="username"></td></tr>
+				<tr><td>Password</td><td><input type="password" name="password"></td></tr>
+				<tr><td colspan="2"><input type="submit" value="Log In"></td></tr>
+			</table>
+		</form>
+		</center>
+		<h3>Create Account</h3>
+		<center>
+		<form action="create" method="POST">
+			<table id="login">
+				<tr><td>Username</td><td><input type="text" name="username"></td></tr>
+				<tr><td>Password</td><td><input type="password" name="password1"></td></tr>
+				<tr><td>Repeat</td><td><input type="password" name="password2"></td></tr>
+				<tr><td>Email</td><td><input type="text" name="email"></td></tr>
+				<tr><td colspan="2"><input type="submit" value="Create"></td></tr>
+			</table>
+		</form>
+		</center>
+
+	<h3>Links</h3>
+		<center>
+		<a href="gallery">User gallery</a> | 
+		<a href="manual">Instructions</a>
+		</center>
+</div>
+<div class="right_wide">
+	<h3>Examples</h3>
+	<table id="avatars">
+		<tr>
+			$:avatars
+		</tr>
+	</table>
+</div>
