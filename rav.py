@@ -33,6 +33,7 @@ urls = (
     '/create', 'create',
     '/upload', 'upload',
     '/(favicon.ico)', 'static',
+    '/static/(script.js|style.css)', 'static',
 )
 
 
@@ -67,11 +68,23 @@ def load_sqla(handler):
 render = web.template.render("./templates/")
 app = web.application(urls, globals())
 app.add_processor(load_sqla)
-import rediswebpy
+
+import os, urlparse
+db_info = urlparse.urlparse(os.environ['DB_DSN'])
 session = web.session.Session(
-    #app, rediswebpy.RedisStore(prefix='session:rav:'),
-    app, rediswebpy.RedisStore(),
-    initializer={'username': None})
+    app,
+    web.session.DBStore(
+        web.database(
+            dbn=db_info.scheme,
+            host=db_info.hostname,
+            port=db_info.port,
+            db=db_info.path.strip("/"),
+            user=db_info.username,
+            pw=db_info.password),
+        'sessions'
+    ),
+    initializer={'username': None}
+)
 
 
 # {{{ utility functions
@@ -205,7 +218,7 @@ class avatar_by_username:
             #    scale = [int(n) for n in form["scale"].value.split("x")]
             #    avatar.scale(scale)
             web.header('Content-Type', avatar.mime)
-            return getdata("../htdocs" + avatar.datalink)
+            return getdata(avatar.datalink)
         else:
             raise RavError("Error", "No matching avatars found")
 
@@ -258,7 +271,7 @@ class timeline:
 
 class avatar_by_hash:
     def GET(self, hash):
-        return getdata("../htdocs/data/"+hash[0:2]+"/"+hash)
+        return getdata("/data/"+hash[0:2]+"/"+hash)
 
 
 class static:
@@ -457,13 +470,9 @@ class upload:
 
 if __name__ == "__main__":
     logging.basicConfig(
-            level=logging.DEBUG,
-            format='%(asctime)s %(levelname)-8s %(message)s',
-            filename="../logs/app.log")
-    smtp = logging.handlers.SMTPHandler(
-            "localhost", "noreply@shishnet.org",
-            ["shish+rav@shishnet.org", ], "rav error report")
-    smtp.setLevel(logging.WARNING)
-    logging.getLogger('').addHandler(smtp)
+        level=logging.DEBUG,
+        format='%(asctime)s %(levelname)-8s %(message)s',
+        # filename="../logs/app.log",
+    )
 
     app.run()

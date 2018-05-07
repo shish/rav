@@ -2,20 +2,14 @@
 import hashlib
 from PIL import Image
 import StringIO
+import os
 
 from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, Unicode, Boolean
 from sqlalchemy import ForeignKey, desc
 from sqlalchemy.orm import relationship, backref
 
-import ConfigParser
-config = ConfigParser.SafeConfigParser()
-config.read("../app/rav.cfg")
-host = config.get("database", "hostname")
-user = config.get("database", "username")
-password = config.get("database", "password")
-database = config.get("database", "database")
-engine = create_engine("postgres://%s:%s@%s/%s" % (user, password, host, database), echo=False)
+engine = create_engine(os.environ['DB_DSN'], echo=False)
 
 
 from sqlalchemy.ext.declarative import declarative_base
