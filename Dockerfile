@@ -1,4 +1,4 @@
-FROM python:2.7-stretch
+FROM python:2.7-slim-stretch
 ENV DB_DSN=postgres://foo:bar@172.17.0.1/mydatabase
 EXPOSE 8000
 VOLUME /data
