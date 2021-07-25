@@ -75,7 +75,7 @@ session = web.session.Session(
     app,
     web.session.DBStore(
         web.database(
-            dbn=db_info.scheme,
+            dbn=db_info.scheme.replace("postgresql", "postgres"),
             host=db_info.hostname,
             port=db_info.port,
             db=db_info.path.strip("/"),
