@@ -1,0 +1,27 @@
+{% extends "standard.jinja2" %}
+{% from 'funcs.jinja2' import avatar_table, avatar_to_td_user %}
+
+{% block body %}
+<div class="left_thin">
+	<h3>Navigation</h3>
+	<center><p><a href="/">Main Page</a> | <a href="/manual">Manual</a></p></center>
+
+	<h3>List</h3>
+    <table id="gallery_list" width="200" border="1" align="center">
+	    <thead><td>User</td><td>Avatars</td></thead>
+	{% for username, count in user_counts: %}
+		<tr><td><a href='{{ username }}.html'>{{ username }}</a></td><td>{{ count }}</td></tr>
+	{% endfor %}
+	</table>
+</div>
+<div class="right_wide">
+	<h3>New Uploads</h3>
+	<table id="avatars">
+		{{ avatar_table(new_avatars, 4, avatar_to_td_user) }}
+	</table>
+	<h3>Random Selection</h3>
+	<table id="avatars">
+		{{ avatar_table(random_avatars, 4, avatar_to_td_user) }}
+	</table>
+</div>
+{% endblock %}

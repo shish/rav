@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<title>{{ title }}</title>
+		<link rel="stylesheet" href="static/style.css">
+		<script language="javascript" src="static/script.js"></script>
+	</head>
+	<body>
+		<div id="container">
+			<h1>{{ heading }}</h1>
+			<div id="nav">
+				{{ nav }}
+			</div>
+			<div id="body">
+				{% block body %}No body specified :({% endblock %}
+			</div>
+			<div id="footer">
+				<a href="https://github.com/shish/rav">Rav code</a> &copy; Shish 2023, no claim is made of avatar ownership~
+			</div>
+		</div>
+	</body>
+</html>
+

@@ -1,10 +1,15 @@
-$def with(username, avatars)
+{% extends "standard.jinja2" %}
+{% from 'funcs.jinja2' import avatar_table, avatar_to_td2 %}
+
+{% block body %}
 <div class="left_thin">
-	$if username:
+	{% if username: %}
 		<h3>Logged In</h3>
-		Logged in as $username
-		<br><a href="user">Edit Avatars</a> | <a href="logout">Log Out</a>
-	$else:
+		<center>
+			Logged in as {{ username }}
+			<br><a href="user">Edit Avatars</a> | <a href="logout">Log Out</a>
+		</center>
+	{% else: %}
 		<h3>Log In</h3>
 		<center>
 		<form action="login" method="POST">
@@ -27,18 +32,20 @@ $def with(username, avatars)
 			</table>
 		</form>
 		</center>
+	{% endif %}
 
 	<h3>Links</h3>
-		<center>
-		<a href="gallery">User gallery</a> | 
-		<a href="manual">Instructions</a>
-		</center>
+	<center>
+	<a href="gallery">User gallery</a> | 
+	<a href="manual">Instructions</a>
+	</center>
 </div>
 <div class="right_wide">
 	<h3>Examples</h3>
 	<table id="avatars">
 		<tr>
-			$:avatars
+			{{ avatar_table(avatars, 4, avatar_to_td2) }}
 		</tr>
 	</table>
 </div>
+{% endblock %}

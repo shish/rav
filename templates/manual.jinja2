@@ -1,3 +1,8 @@
+{% extends "standard.jinja2" %}
+{% from 'funcs.jinja2' import avatar_table %}
+
+{% block body %}
+
 <div class="left">
 	<h3>Misc Notes</h3>
 	<p>Do try and make your avatar sets recognisably yours; people use the
@@ -21,24 +26,10 @@
 </div>
 <div class="right">
 	<h3>Navigation</h3>
-	<center><p><a href="/">Main Page</a> / <a href="/gallery">Gallery</a></p></center>
+	<center><p><a href="/">Main Page</a> | <a href="/gallery">Gallery</a></p></center>
 
 	<h3>Terms and Conditions</h3>
 	<p>No blatant porn</p>
-
-<!--
-	<h3>Tech Info</h3>
-	<p>Args are fed in via the regular HTTP GET method; first argument uses a ? to
-	separate filename and arg, then the rest use &amp;, eg
-
-	<p><code>avatar.py?user=shish
-	<br>avatar.py?user=shish&amp;scale=125x125&amp;.png</code>
-
-	<p>the &amp;.png is just to trick the forum software, which only allows links
-	to files that end in png/jpg/gif
-
-	<p>Alternatively, if you only want to set the username, there is a shortcut:
-
-	<p><code>http://rav.shishnet.org/[username].png</code>
--->
 </div>
+
+{% endblock %}
