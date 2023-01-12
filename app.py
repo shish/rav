@@ -238,7 +238,7 @@ def login():
     )
     session['username'] = username
     app.logger.info("logged in from %s" % (request.remote_addr))
-    return redirect(url_for("index"))
+    return redirect(url_for("user"))
 
 @app.route("/logout")
 def logout():
