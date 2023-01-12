@@ -1,0 +1,3 @@
+graft rav2/static
+graft rav2/templates
+global-exclude *.pyc

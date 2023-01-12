@@ -3,10 +3,10 @@
 
 {% block body %}
 <div class="left_thin">
-	{% if username: %}
+	{% if user: %}
 		<h3>Logged In</h3>
 		<center>
-			Logged in as {{ username }}
+			Logged in as {{ user.username }}
 			<br><a href="user">Edit Avatars</a> | <a href="logout">Log Out</a>
 		</center>
 	{% else: %}
@@ -36,8 +36,8 @@
 
 	<h3>Links</h3>
 	<center>
-	<a href="gallery">User gallery</a> | 
-	<a href="manual">Instructions</a>
+	<a href="gallery">Gallery</a> | 
+	<a href="manual">Manual</a>
 	</center>
 </div>
 <div class="right_wide">

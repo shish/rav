@@ -2,3 +2,5 @@
 *.cfg
 data
 venv
+.coverage
+*.egg-info
