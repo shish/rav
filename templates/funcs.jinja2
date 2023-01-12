@@ -2,7 +2,7 @@
     <tr>
         {% for avatar in avatars: %}
             {{ func(avatar) }}
-            {% if loop.index0 % size == 0: %}
+            {% if loop.index % size == 0: %}
                 </tr><tr>
             {% endif %}
         {% endfor %}
