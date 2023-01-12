@@ -155,7 +155,7 @@ def manual():
 @app.route("/<path>.<ext>")
 def avatar(path: str, ext: str) -> bytes:
     if len(path) == 32:
-        avatar = db.one_or_404(
+        avatar = db.first_or_404(
             db.select(Avatar)
             .filter(Avatar.hash==path)
         )
