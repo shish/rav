@@ -9,4 +9,4 @@ COPY . /app
 WORKDIR /app
 RUN /usr/local/bin/pip install -r requirements.txt
 RUN ln -s /data /app/data
-CMD ["/usr/local/bin/flask", "run", "-p", "8000"]
+CMD ["/usr/local/bin/flask", "run", "-h", "0.0.0.0", "-p", "8000"]
