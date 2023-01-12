@@ -8,7 +8,7 @@ from PIL import Image
 
 tagline = "[Rav - The Random Avatar Host]"
 host = "https://rav.shishnet.org"
-std_width = 250
+std_width = 150
 
 db = SQLAlchemy()
 app = Flask(__name__, instance_path=os.path.abspath("./data"))
@@ -131,8 +131,8 @@ def index():
     avatars = db.session.execute(
         db.select(Avatar)
         .filter(Avatar.enabled==True)
-        .filter(Avatar.width<=std_width)
-        .filter(Avatar.height<=std_width)
+        .filter(Avatar.width==std_width)
+        .filter(Avatar.height==std_width)
         .order_by(db.func.random())
         .limit(12)
     ).scalars()
