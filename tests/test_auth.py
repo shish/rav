@@ -5,7 +5,7 @@ from flask.testing import FlaskClient, FlaskCliRunner
 from rav2.models import db
 
 
-def test_create(app: Flask, client: FlaskClient):
+def test_create_ok(app: Flask, client: FlaskClient):
     response = client.post(
         "/create", data={"username": "a", "password1": "b", "password2": "b"}
     )
@@ -27,9 +27,10 @@ def test_create(app: Flask, client: FlaskClient):
         ("a", "", "", b"Password is required"),
         ("a", "b", "c", b"don&#39;t match"),
         ("test", "test", "test", b"already been taken"),
+        ("TeSt", "test", "test", b"already been taken"),
     ),
 )
-def test_create_validate_input(
+def test_create_error(
     client: FlaskClient, username, password1, password2, message
 ):
     response = client.post(
@@ -39,39 +40,40 @@ def test_create_validate_input(
     assert message in response.data
 
 
-def test_login(client: FlaskClient):
-    response = client.post("/login", data={"username": "test", "password": "test"})
-    assert response.headers["Location"] == "/user"
-
-    client.get("/")
-    assert session["user_id"] == 1
-    assert g.user.id == 1
-
-
 @pytest.mark.parametrize(
-    ("username", "password"),
+    ("username", "password", "ok"),
     (
-        ("a", "test"),
-        ("test", "a"),
+        ("test", "test", True),  # exact match
+        ("TeSt", "test", True),  # name should be case-insensitive
+        ("a", "test", False),  # invalid name
+        ("test", "a", False),  # invalid password
+        ("test", "TeSt", False),  # password should be case-sensitive
     ),
 )
-def test_login_validate_input(client: FlaskClient, username, password):
+def test_login(client: FlaskClient, username, password, ok):
     response = client.post("/login", data={"username": username, "password": password})
-    assert response.status_code == 404
+    if ok:
+        assert response.headers.get("Location") == "/user"
+
+        client.get("/user")
+        assert session.get("user_id") == 1
+        assert g.user.id == 1
+    else:
+        assert response.status_code == 404
 
 
 def test_logout(app: Flask, client: FlaskClient) -> None:
     response = client.post("/login", data={"username": "test", "password": "test"})
-    assert response.headers["Location"] == "/user"
+    assert response.headers.get("Location") == "/user"
 
     client.get("/")
-    assert session["user_id"] == 1
+    assert session.get("user_id") == 1
     assert g.user.id == 1
 
     response = client.get(
         "/logout",
     )
-    assert response.headers["Location"] == "/"
+    assert response.headers.get("Location") == "/"
 
     client.get("/")
     assert "user_id" not in session
