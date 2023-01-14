@@ -5,39 +5,35 @@ from flask.testing import FlaskClient, FlaskCliRunner
 from rav2.models import db
 
 
-def test_create_ok(app: Flask, client: FlaskClient):
-    response = client.post(
-        "/create", data={"username": "a", "password1": "b", "password2": "b"}
-    )
-    assert response.headers["Location"] == "/user"
-
-    with app.app_context():
-        assert (
-            db.session.execute(
-                db.text("SELECT * FROM users WHERE name = 'a'"),
-            ).fetchone()
-            is not None
-        )
-
-
 @pytest.mark.parametrize(
-    ("username", "password1", "password2", "message"),
+    ("username", "password1", "password2", "error"),
     (
+        ("a", "b", "b", None),
         ("", "", "", b"Username is required"),
         ("a", "", "", b"Password is required"),
         ("a", "b", "c", b"don&#39;t match"),
         ("test", "test", "test", b"already been taken"),
         ("TeSt", "test", "test", b"already been taken"),
+        ("a"*32, "aaaa", "aaaa", b"less than 32"),
     ),
 )
-def test_create_error(
-    client: FlaskClient, username, password1, password2, message
+def test_create(
+    client: FlaskClient, username, password1, password2, error
 ):
     response = client.post(
         "/create",
         data={"username": username, "password1": password1, "password2": password2},
     )
-    assert message in response.data
+    if error:
+        assert error in response.data
+    else:
+        assert response.headers.get("Location") == "/user"
+        assert (
+            db.session.execute(
+                db.text(f"SELECT * FROM users WHERE name = '{username}'"),
+            ).fetchone()
+            is not None
+        )
 
 
 @pytest.mark.parametrize(

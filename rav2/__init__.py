@@ -189,6 +189,8 @@ def create_app(test_config=None):
         username = request.form["username"]
         if not username:
             return abort(403, "Username is required")
+        if len(username) >= 32:
+            return abort(403, "Username needs to be less than 32 characters")
 
         user = db.session.execute(
             db.select(User).filter(db.func.lower(User.username) == db.func.lower(username))
