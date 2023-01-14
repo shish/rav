@@ -41,3 +41,9 @@ def test_avatar(client: FlaskClient):
 
     response = client.get("/xxx3689aae9bd74e55dec440e10bcxxx.png")
     assert response.status_code == 404
+
+    response = client.get("/1873689aae9bd74e55dec440e10bc01c/blah.png")
+    assert response.status_code == 200
+
+    response = client.get("/xxx3689aae9bd74e55dec440e10bcxxx/blah.png")
+    assert response.status_code == 404

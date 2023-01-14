@@ -112,7 +112,8 @@ def create_app(test_config=None):
         )
 
     @app.route("/<path>.<ext>")
-    def avatar(path: str, ext: str) -> Response:
+    @app.route("/<path>/<name>.<ext>")
+    def avatar(path: str, name: str=None, ext: str=None) -> Response:
         if len(path) == 32:
             avatar = db.first_or_404(db.select(Avatar).filter(Avatar.hash == path))
             return Response(avatar.data, mimetype="image/" + avatar.mime.lower())
