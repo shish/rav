@@ -223,7 +223,8 @@ def create_app(test_config=None):
         user = db.one_or_404(
             db.select(User)
             .filter(db.func.lower(User.username) == db.func.lower(username))
-            .filter(User.password == password)
+            .filter(User.password == password),
+            description="No user was found with that username + password"
         )
         session["user_id"] = user.id
         app.logger.info(f"logged in from {request.remote_addr}")
