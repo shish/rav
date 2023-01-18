@@ -68,8 +68,7 @@ ARTICLE#gallery_list {
 	grid-template:
 		"navigation new" auto
 		"list       new" auto
-		".          new" auto
-		".          random" auto
+		"list       random" auto
 		/ 250px auto;
 }
 SECTION#list {grid-area: list;}
