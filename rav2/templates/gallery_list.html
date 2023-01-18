@@ -1,11 +1,14 @@
-{% extends "standard.html" %}
-{% from 'funcs.html' import avatar_table, avatar_to_td_user %}
+{% extends "_standard.html" %}
+{% from '_funcs.html' import avatar_table, avatar_to_td_user %}
 
-{% block body %}
-<div class="left_thin">
+{% block id %}gallery_list{% endblock %}
+{% block article %}
+<section id="navigation">
 	<h3>Navigation</h3>
-	<center><p><a href="/">Main Page</a> | <a href="/manual">Manual</a></p></center>
+	<a href="/">Main Page</a> | <a href="/manual">Manual</a>
+</section>
 
+<section id="list">
 	<h3>List</h3>
     <table id="gallery_list" width="200" border="1" align="center">
 	    <thead><td>User</td><td>Avatars</td></thead>
@@ -13,15 +16,15 @@
 		<tr><td><a href='{{ username }}.html'>{{ username }}</a></td><td>{{ count }}</td></tr>
 	{% endfor %}
 	</table>
-</div>
-<div class="right_wide">
+</section>
+
+<section id="new">
 	<h3>New Uploads</h3>
-	<table id="avatars">
-		{{ avatar_table(new_avatars, 4, avatar_to_td_user) }}
-	</table>
+	{{ avatar_table(new_avatars, avatar_to_td_user) }}
+</section>
+
+<section id="random">
 	<h3>Random Selection</h3>
-	<table id="avatars">
-		{{ avatar_table(random_avatars, 4, avatar_to_td_user) }}
-	</table>
-</div>
+	{{ avatar_table(random_avatars, avatar_to_td_user) }}	
+</section>
 {% endblock %}

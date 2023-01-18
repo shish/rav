@@ -1,17 +1,24 @@
-{% extends "standard.html" %}
-{% from 'funcs.html' import avatar_table %}
+{% extends "_standard.html" %}
+{% from '_funcs.html' import avatar_table %}
 
-{% block body %}
+{% block id %}manual{% endblock %}
+{% block article %}
+<section id="navigation">
+	<h3>Navigation</h3>
+	<a href="/">Main Page</a> | <a href="/gallery">Gallery</a>
+</section>
 
-<div class="left">
+<section id="notes">
 	<h3>Misc Notes</h3>
-	<p>Do try and make your avatar sets recognisably yours; people use the
+	Do try and make your avatar sets recognisably yours; people use the
 	avatars as a quick and easy way to see who's who, and if you have
 	hundreds of unrelated avatars the purpose is lost. Keeping to a theme
 	is good, eg I have random scenes with my character from the lego avatar
 	generator edited in -- They're all different, but they're recognisably
-	mine because of the common character.</p>
+	mine because of the common character.
+</section>
 
+<section id="control">
 	<h3>The Control Panel</h3>
 	<p>The uploader should accept gif, jpg and png images; for some reason the
 	image library doesn't seem to recognise some animated gifs as valid
@@ -23,13 +30,10 @@
 	included in the random choice, ones with "use: no" not -- this allows you
 	to keep some avatars uploaded but only enable them for special occasions,
 	eg christmas / easter / pirate themed variations.
-</div>
-<div class="right">
-	<h3>Navigation</h3>
-	<center><p><a href="/">Main Page</a> | <a href="/gallery">Gallery</a></p></center>
+</section>
 
+<section id="tnc">
 	<h3>Terms and Conditions</h3>
-	<p>No blatant porn</p>
-</div>
-
+	No blatant porn
+</section>
 {% endblock %}

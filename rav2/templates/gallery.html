@@ -1,32 +1,31 @@
-{% extends "standard.html" %}
-{% from 'funcs.html' import avatar_table, avatar_to_td2 %}
+{% extends "_standard.html" %}
+{% from '_funcs.html' import avatar_table, avatar_to_td2 %}
 
-{% block body %}
-<div class="left">
+{% block id %}gallery{% endblock %}
+{% block article %}
+<section id="navigation">
+	<h3>Navigation</h3>
+	<a href="/">Main Page</a> | <a href="/gallery">Gallery</a>
+</section>
+
+<section id="message">
 	<h3>User's Message</h3>
 	{% if user.message: %}
 		{{ user.message }}
 	{% else: %}
 		[user hasn't specified a gallery message]
 	{% endif %}
-</div>
-<div class="right">
+</section>
+
+<section id="stats">
 	<h3>Stats</h3>
 	User has {{ user.num_active_avatars }} active avatars
 	({{ user.num_avatars }} total),
-	mostly sized {{ user.common_size }}
-	<h3>Links</h3>
-	<center>
-	<a href="/">Main Page</a> | <a href="/gallery">Gallery</a>
-	</center>
-</div>
-<div class="all">
+	<br/>mostly sized {{ user.common_size }}
+</section>
+
+<section id="avatars">
 	<h3>Avatar List</h3>
-	<table id="avatars">
-		<tr>
-			{{ avatar_table(user.avatars, 4, avatar_to_td2) }}
-		</tr>
-	</table>
-</div>
-<br>
+	{{ avatar_table(user.avatars, avatar_to_td2) }}
+</section>
 {% endblock %}

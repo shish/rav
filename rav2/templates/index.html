@@ -1,27 +1,28 @@
-{% extends "standard.html" %}
-{% from 'funcs.html' import avatar_table, avatar_to_td2 %}
+{% extends "_standard.html" %}
+{% from '_funcs.html' import avatar_table, avatar_to_td2 %}
 
-{% block body %}
-<div class="left_thin">
-	{% if user: %}
+{% block id %}index{% endblock %}
+{% block article %}
+{% if user: %}
+	<section id="login">
 		<h3>Logged In</h3>
-		<center>
-			Logged in as {{ user.username }}
-			<br><a href="user">Edit Avatars</a> | <a href="logout">Log Out</a>
-		</center>
-	{% else: %}
+		Logged in as {{ user.username }}
+		<br><a href="user">Edit Avatars</a> | <a href="logout">Log Out</a>	
+	</section>
+{% else: %}
+	<section id="login">
 		<h3>Log In</h3>
-		<center>
 		<form action="login" method="POST">
 			<table id="login">
 				<tr><td>Username</td><td><input type="text" name="username"></td></tr>
 				<tr><td>Password</td><td><input type="password" name="password"></td></tr>
 				<tr><td colspan="2"><input type="submit" value="Log In"></td></tr>
 			</table>
-		</form>
-		</center>
+		</form>	
+	</section>
+
+	<section id="create">
 		<h3>Create Account</h3>
-		<center>
 		<form action="create" method="POST">
 			<table id="login">
 				<tr><td>Username</td><td><input type="text" name="username"></td></tr>
@@ -31,21 +32,17 @@
 				<tr><td colspan="2"><input type="submit" value="Create"></td></tr>
 			</table>
 		</form>
-		</center>
-	{% endif %}
+	</section>
+{% endif %}
 
-	<h3>Links</h3>
-	<center>
-	<a href="gallery">Gallery</a> | 
-	<a href="manual">Manual</a>
-	</center>
-</div>
-<div class="right_wide">
-	<h3>Examples</h3>
-	<table id="avatars">
-		<tr>
-			{{ avatar_table(avatars, 4, avatar_to_td2) }}
-		</tr>
-	</table>
-</div>
+	<section id="navigation">
+		<h3>Navigation</h3>
+		<a href="gallery">Gallery</a> | 
+		<a href="manual">Manual</a>
+	</section>
+
+	<section id="examples">
+		<h3>Examples</h3>
+		{{ avatar_table(avatars, avatar_to_td2) }}
+	</section>
 {% endblock %}

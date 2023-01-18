@@ -1,50 +1,43 @@
-{% macro avatar_table(avatars, size, func) %}
-    <tr>
+{% macro avatar_table(avatars, func) %}
+    <div class="avatars">
         {% for avatar in avatars: %}
             {{ func(avatar) }}
-            {% if loop.index % size == 0: %}
-                </tr><tr>
-            {% endif %}
         {% endfor %}
     </tr>
 {% endmacro %}
 
 {% macro avatar_to_td_user(avatar) %}
-    <td>
+    <div class="avatar">
         <a href="{{ avatar.owner.username }}.html"><img
             src="{{ avatar.link }}"
             alt="{{ avatar.filename }}"
-            width="{{ avatar.width }}"
-            height="{{ avatar.height }}"
         /><br>{{ avatar.owner.username }}</a>
-    </td>
+    </div>
 {% endmacro %}
 
 {% macro avatar_to_td(avatar) %}
-    <td class="{{ 'enabled' if avatar.enabled else 'disabled' }}">
-        <img src="{{ avatar.link }}" alt="{{ avatar.filename }}" width="{{ avatar.width }}" height="{{ avatar.height }}">
+    <div class="avatar {{ 'enabled' if avatar.enabled else 'disabled' }}">
+        <img src="{{ avatar.link }}" alt="{{ avatar.filename }}">
         <br>{{ avatar.filename }}
-    </td>
+    </div>
 {% endmacro %}
 
 {% macro avatar_to_td2(avatar) %}
-    <td>
+    <div class="avatar">
         <a href="{{ avatar.owner.username }}.html"><img
             src="{{ avatar.link }}"
             alt="{{ avatar.filename }}"
-            width="{{ avatar.width }}"
-            height="{{ avatar.height }}"
         /><br>{{ avatar.owner.username }}</a>
-    </td>
+    </div>
 {% endmacro %}
 
 {% macro avatar_to_td_edit(avatar) %}
-    <td id="av{{ avatar.id }}" class="{{ "enabled" if avatar.enabled else "disabled" }}">
-        <img src="/{{ avatar.hash }}.{{ avatar.mime.lower() }}" alt="{{ avatar.filename }}">
+    <div id="av{{ avatar.id }}" class="avatar {{ 'enabled' if avatar.enabled else 'disabled' }}">
+        <img src="{{ avatar.link }}" alt="{{ avatar.filename }}">
         <br>{{ avatar.filename }}
         <br>{{ avatar.width }} x {{ avatar.height }}
         <br><a href="delete?avatar_id={{ avatar.id }}">Delete</a>
         <br><a href="toggle?avatar_id={{ avatar.id }}" onclick="callToggle({{ avatar.id }}); return false;">Toggle use</a>
         <br>(Current: <span id="on{{ avatar.id }}">{{ "yes" if avatar.enabled else "no" }}</span>)
-    </td>
+    </div>
 {% endmacro %}

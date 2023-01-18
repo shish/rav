@@ -19,7 +19,7 @@ from flask import (
 from .models import db, User, Avatar
 
 
-std_width = 150
+std_width = 512
 
 
 def create_app(test_config=None):
@@ -90,8 +90,8 @@ def create_app(test_config=None):
         avatars = db.session.execute(
             db.select(Avatar)
             .filter(Avatar.enabled == True)
-            .filter(Avatar.width == std_width)
-            .filter(Avatar.height == std_width)
+            .filter(Avatar.width <= std_width)
+            .filter(Avatar.height <= std_width)
             .order_by(db.func.random())
             .limit(12)
         ).scalars()

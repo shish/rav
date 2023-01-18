@@ -1,29 +1,28 @@
-{% extends "standard.html" %}
-{% from 'funcs.html' import avatar_table, avatar_to_td_edit %}
+{% extends "_standard.html" %}
+{% from '_funcs.html' import avatar_table, avatar_to_td_edit %}
 
-{% block body %}
-<div class="left">
+{% block id %}user{% endblock %}
+{% block article %}
+<section id="navigation">
+	<h3>Navigation</h3>
+	<p>Link to avatar:
+	<a href="https://rav.shishnet.org/{{ user.username }}.png">https://rav.shishnet.org/{{ user.username }}.png</a>
+	<br>Link to gallery:
+	<a href="https://rav.shishnet.org/{{ user.username }}.html">https://rav.shishnet.org/{{ user.username }}.html</a>
+	</p>
+	<p><a href="/">Main Page</a> | <a href="logout">Log Out</a></p>
+</section>
+
+<section id="upload">
 	<h3>Upload</h3>
-	<center>
-		<form enctype='multipart/form-data' action='upload' method='POST'>
-			<input name='avatar_data' type='file'>
-			<input type='submit' value='Upload'>
-		</form>
-	</center>
+	<form enctype='multipart/form-data' action='upload' method='POST'>
+		<input name='avatar_data' type='file'>
+		<input type='submit' value='Upload'>
+	</form>
+</section>
 
-	<h3>Info</h3>
-	<center>
-		<p>Link to avatar:
-		<a href="https://rav.shishnet.org/{{ user.username }}.png">https://rav.shishnet.org/{{ user.username }}.png</a>
-		<br>Link to gallery:
-		<a href="https://rav.shishnet.org/{{ user.username }}.html">https://rav.shishnet.org/{{ user.username }}.html</a>
-		</p>
-		<p><a href="/">Main Page</a> | <a href="logout">Log Out</a></p>
-	</center>
-</div>
-<div class="right">
+<section id="settings">
 	<h3>Settings</h3>
-	<center>
 	<form action="settings" method="POST">
 		<table class="form">
 			<tr>
@@ -39,12 +38,10 @@
 			</td>
 		</table>
 	</form>
-	</center>
-</div>
-<div class="all">
+</section>
+
+<section id="avatars">
 	<h3>Avatars</h3>
-	<table id="avatars">
-		{{ avatar_table(user.avatars, 5, avatar_to_td_edit) }}
-	</table>
-</div>
+	{{ avatar_table(user.avatars, avatar_to_td_edit) }}
+</section>
 {% endblock %}
