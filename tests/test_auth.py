@@ -14,12 +14,10 @@ from rav2.models import db
         ("a", "b", "c", b"don&#39;t match"),
         ("test", "test", "test", b"already been taken"),
         ("TeSt", "test", "test", b"already been taken"),
-        ("a"*32, "aaaa", "aaaa", b"less than 32"),
+        ("a" * 32, "aaaa", "aaaa", b"less than 32"),
     ),
 )
-def test_create(
-    client: FlaskClient, username, password1, password2, error
-):
+def test_create(client: FlaskClient, username, password1, password2, error):
     response = client.post(
         "/create",
         data={"username": username, "password1": password1, "password2": password2},

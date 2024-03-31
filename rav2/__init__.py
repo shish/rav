@@ -2,6 +2,7 @@ import os
 import hashlib
 import functools
 import click
+import typing as t
 
 from flask import (
     Flask,
@@ -113,7 +114,7 @@ def create_app(test_config=None):
 
     @app.route("/<path>.<ext>")
     @app.route("/<path>/<name>.<ext>")
-    def avatar(path: str, name: str=None, ext: str=None) -> Response:
+    def avatar(path: str, name: t.Optional[str] = None, ext: t.Optional[str] = None) -> Response:
         if len(path) == 32:
             avatar = db.first_or_404(db.select(Avatar).filter(Avatar.hash == path))
             return Response(avatar.data, mimetype="image/" + avatar.mime.lower())
@@ -193,7 +194,9 @@ def create_app(test_config=None):
             return abort(403, "Username needs to be less than 32 characters")
 
         user = db.session.execute(
-            db.select(User).filter(db.func.lower(User.username) == db.func.lower(username))
+            db.select(User).filter(
+                db.func.lower(User.username) == db.func.lower(username)
+            )
         ).scalar()
         if user:
             return abort(403, "That username has already been taken, sorry D:")
@@ -224,7 +227,7 @@ def create_app(test_config=None):
             db.select(User)
             .filter(db.func.lower(User.username) == db.func.lower(username))
             .filter(User.password == password),
-            description="No user was found with that username + password"
+            description="No user was found with that username + password",
         )
         session["user_id"] = user.id
         app.logger.info(f"logged in from {request.remote_addr}")

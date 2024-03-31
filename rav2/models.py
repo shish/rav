@@ -4,18 +4,24 @@ import io
 
 from PIL import Image
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
-db = SQLAlchemy()
+
+class Base(DeclarativeBase):
+    pass
+
+
+db = SQLAlchemy(model_class=Base)
 
 
 class User(db.Model):  # type: ignore
     __tablename__ = "users"
 
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column("name", db.Unicode, nullable=False, index=True)
-    password = db.Column("pass", db.String(32), nullable=False)
-    email = db.Column(db.Unicode, default="")
-    message = db.Column(db.Unicode, default="")
+    id: Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column("name", nullable=False, index=True)
+    password: Mapped[str] = mapped_column("pass", db.String(32), nullable=False)
+    email: Mapped[str] = mapped_column(default="")
+    message: Mapped[str] = mapped_column(default="")
 
     def __init__(self, username: str, password: str, email: str) -> None:
         self.username = username
@@ -43,19 +49,19 @@ class User(db.Model):  # type: ignore
 class Avatar(db.Model):  # type: ignore
     __tablename__ = "avatars"
 
-    id = db.Column(db.Integer, primary_key=True)
-    owner_id = db.Column(
-        db.Integer, db.ForeignKey("users.id"), nullable=False, index=True
+    id: Mapped[int] = mapped_column(primary_key=True)
+    owner_id: Mapped[int] = mapped_column(
+        db.ForeignKey("users.id"), nullable=False, index=True
     )
-    hash = db.Column(db.String(32), nullable=False)
-    filename = db.Column(db.Unicode, nullable=False)
-    width = db.Column(db.Integer, nullable=False)
-    height = db.Column(db.Integer, nullable=False)
-    filesize = db.Column(db.Integer, nullable=False)
-    mime = db.Column(db.String, nullable=False)
-    enabled = db.Column(db.Boolean, nullable=False, default=True)
+    hash: Mapped[str] = mapped_column(db.String(32), nullable=False)
+    filename: Mapped[str] = mapped_column(nullable=False)
+    width: Mapped[int] = mapped_column(nullable=False)
+    height: Mapped[int] = mapped_column(nullable=False)
+    filesize: Mapped[int] = mapped_column(nullable=False)
+    mime: Mapped[str] = mapped_column(nullable=False)
+    enabled: Mapped[bool] = mapped_column(nullable=False, default=True)
 
-    owner = db.relationship(
+    owner = relationship(
         "User",
         backref=db.backref(
             "avatars", cascade="all,delete-orphan", order_by=db.desc("id")
@@ -69,7 +75,7 @@ class Avatar(db.Model):  # type: ignore
         self.hash = hashlib.md5(data).hexdigest()
         self.filesize = len(data)
         self.width, self.height = img.size
-        self.mime = img.format
+        self.mime = img.format or "png"
         # if self.width > 150 or self.height > 150:
         #    raise AvatarAddError("Avatar over-sized (max 150x150)")
         self.data = data

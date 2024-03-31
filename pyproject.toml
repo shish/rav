@@ -20,6 +20,7 @@ dev = [
 test = [
     "mypy",
     "pytest-cov ~=3.0.0",
+    "types-Pillow",
 ]
 
 [tool.setuptools]
