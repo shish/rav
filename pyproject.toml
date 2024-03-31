@@ -16,8 +16,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "black",
-]
-test = [
+    "ruff",
     "mypy",
     "pytest-cov ~=3.0.0",
     "types-Pillow",
