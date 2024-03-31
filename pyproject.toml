@@ -42,3 +42,11 @@ extend-exclude = '''
 
 [tool.isort]
 profile = "black"
+
+[tool.mypy]
+files = "rav2"
+
+[tool.ruff.lint]
+ignore = [
+    "E712",  # sqlalchemy requires "Table.column == True"
+]

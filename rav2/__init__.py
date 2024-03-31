@@ -14,7 +14,6 @@ from flask import (
     request,
     abort,
     send_from_directory,
-    jsonify,
     g,
 )
 from .models import db, User, Avatar
@@ -28,6 +27,11 @@ def create_app(test_config=None):
     # Load config
 
     app = Flask(__name__, instance_path=os.path.abspath("./data"))
+    if not os.path.exists("./data"):
+        os.makedirs("./data")
+    if not os.path.exists("./data/secret.txt"):
+        with open("./data/secret.txt", "wb") as fp:
+            fp.write(os.urandom(32))
     with open("./data/secret.txt", "rb") as fp:
         secret_key = fp.read()
     app.config.from_mapping(
@@ -114,7 +118,9 @@ def create_app(test_config=None):
 
     @app.route("/<path>.<ext>")
     @app.route("/<path>/<name>.<ext>")
-    def avatar(path: str, name: t.Optional[str] = None, ext: t.Optional[str] = None) -> Response:
+    def avatar(
+        path: str, name: t.Optional[str] = None, ext: t.Optional[str] = None
+    ) -> Response:
         if len(path) == 32:
             avatar = db.first_or_404(db.select(Avatar).filter(Avatar.hash == path))
             return Response(avatar.data, mimetype="image/" + avatar.mime.lower())
