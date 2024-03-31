@@ -1,4 +1,6 @@
 from flask.testing import FlaskClient
+from rav2.models import Avatar
+from unittest.mock import patch
 
 
 def test_favicon(client: FlaskClient):
@@ -30,20 +32,21 @@ def test_user_gallery(client: FlaskClient):
 
 
 def test_avatar(client: FlaskClient):
-    response = client.get("/test.png")
-    assert response.status_code == 200
+    with patch.object(Avatar, "data", "test"):
+        response = client.get("/test.png")
+        assert response.status_code == 200
 
-    response = client.get("/nobody.png")
-    assert response.status_code == 404
+        response = client.get("/nobody.png")
+        assert response.status_code == 404
 
-    response = client.get("/1873689aae9bd74e55dec440e10bc01c.png")
-    assert response.status_code == 200
+        response = client.get("/1873689aae9bd74e55dec440e10bc01c.png")
+        assert response.status_code == 200
 
-    response = client.get("/xxx3689aae9bd74e55dec440e10bcxxx.png")
-    assert response.status_code == 404
+        response = client.get("/xxx3689aae9bd74e55dec440e10bcxxx.png")
+        assert response.status_code == 404
 
-    response = client.get("/1873689aae9bd74e55dec440e10bc01c/blah.png")
-    assert response.status_code == 200
+        response = client.get("/1873689aae9bd74e55dec440e10bc01c/blah.png")
+        assert response.status_code == 200
 
-    response = client.get("/xxx3689aae9bd74e55dec440e10bcxxx/blah.png")
-    assert response.status_code == 404
+        response = client.get("/xxx3689aae9bd74e55dec440e10bcxxx/blah.png")
+        assert response.status_code == 404

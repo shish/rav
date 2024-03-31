@@ -27,9 +27,9 @@ def create_app(test_config=None):
     # Load config
 
     app = Flask(__name__, instance_path=os.path.abspath("./data"))
-    if not os.path.exists("./data"):
+    if not os.path.exists("./data"):  # pragma: no cover
         os.makedirs("./data")
-    if not os.path.exists("./data/secret.txt"):
+    if not os.path.exists("./data/secret.txt"): # pragma: no cover
         with open("./data/secret.txt", "wb") as fp:
             fp.write(os.urandom(32))
     with open("./data/secret.txt", "rb") as fp:
@@ -51,7 +51,7 @@ def create_app(test_config=None):
     db.init_app(app)
 
     @click.command("init-db")
-    def init_db_command():
+    def init_db_command():  # pragma: no cover
         """Clear the existing data and create new tables."""
         with app.app_context():
             db.create_all()

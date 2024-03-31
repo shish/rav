@@ -92,12 +92,12 @@ class Avatar(db.Model):  # type: ignore
         return f"data/avatars/{self.hash[0:2]}/{self.hash}"
 
     @property
-    def data(self) -> bytes:
+    def data(self) -> bytes:  # pragma: no cover
         with open(self.dataname, "rb") as fp:
             return fp.read()
 
     @data.setter
-    def data(self, data: bytes) -> None:
+    def data(self, data: bytes) -> None:  # pragma: no cover
         os.makedirs(os.path.dirname(self.dataname), exist_ok=True)
         with open(self.dataname, "wb") as fp:
             fp.write(data)
