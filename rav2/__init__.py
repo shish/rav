@@ -29,7 +29,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_path=os.path.abspath("./data"))
     if not os.path.exists("./data"):  # pragma: no cover
         os.makedirs("./data")
-    if not os.path.exists("./data/secret.txt"): # pragma: no cover
+    if not os.path.exists("./data/secret.txt"):  # pragma: no cover
         with open("./data/secret.txt", "wb") as fp:
             fp.write(os.urandom(32))
     with open("./data/secret.txt", "rb") as fp:
