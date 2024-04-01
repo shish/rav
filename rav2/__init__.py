@@ -1,23 +1,24 @@
-import os
-import hashlib
 import functools
-import click
+import hashlib
+import os
 import typing as t
 
+import click
 from flask import (
     Flask,
-    render_template,
-    session,
     Response,
-    redirect,
-    url_for,
-    request,
     abort,
-    send_from_directory,
     g,
+    redirect,
+    render_template,
+    request,
+    send_from_directory,
+    session,
+    url_for,
 )
-from .models import db, User, Avatar
+from sqlalchemy import select, text
 
+from .models import Avatar, User, db
 
 std_width = 512
 
@@ -93,10 +94,10 @@ def create_app(test_config=None):
     @app.route("/")
     def index() -> str:
         avatars = db.session.execute(
-            db.select(Avatar)
-            .filter(Avatar.enabled == True)
-            .filter(Avatar.width <= std_width)
-            .filter(Avatar.height <= std_width)
+            select(Avatar)
+            .where(Avatar.enabled == True)
+            .where(Avatar.width <= std_width)
+            .where(Avatar.height <= std_width)
             .order_by(db.func.random())
             .limit(12)
         ).scalars()
@@ -122,14 +123,14 @@ def create_app(test_config=None):
         path: str, name: t.Optional[str] = None, ext: t.Optional[str] = None
     ) -> Response:
         if len(path) == 32:
-            avatar = db.first_or_404(db.select(Avatar).filter(Avatar.hash == path))
+            avatar = db.first_or_404(select(Avatar).where(Avatar.hash == path))
             return Response(avatar.data, mimetype="image/" + avatar.mime.lower())
         else:
-            user = db.one_or_404(db.select(User).filter(User.username == path))
+            user = db.one_or_404(select(User).where(User.username == path))
             avatar = db.first_or_404(
-                db.select(Avatar)
-                .filter(Avatar.owner == user)
-                .filter(Avatar.enabled == True)
+                select(Avatar)
+                .where(Avatar.owner == user)
+                .where(Avatar.enabled == True)
                 .order_by(db.func.random())
             )
             # FIXME:
@@ -141,7 +142,7 @@ def create_app(test_config=None):
     @app.route("/gallery")
     def gallery() -> str:
         user_counts = db.session.execute(
-            db.text(
+            text(
                 """
                     select name as username, count(*) as count
                     from users
@@ -153,18 +154,18 @@ def create_app(test_config=None):
             )
         )
         new_avatars = db.session.execute(
-            db.select(Avatar)
-            .filter(Avatar.enabled == True)
-            .filter(Avatar.width <= std_width)
-            .filter(Avatar.height <= std_width)
+            select(Avatar)
+            .where(Avatar.enabled == True)
+            .where(Avatar.width <= std_width)
+            .where(Avatar.height <= std_width)
             .order_by(-Avatar.id)
             .limit(8)
         ).scalars()
         random_avatars = db.session.execute(
-            db.select(Avatar)
-            .filter(Avatar.enabled == True)
-            .filter(Avatar.width <= std_width)
-            .filter(Avatar.height <= std_width)
+            select(Avatar)
+            .where(Avatar.enabled == True)
+            .where(Avatar.width <= std_width)
+            .where(Avatar.height <= std_width)
             .order_by(db.func.random())
             .limit(16)
         ).scalars()
@@ -200,9 +201,7 @@ def create_app(test_config=None):
             return abort(403, "Username needs to be less than 32 characters")
 
         user = db.session.execute(
-            db.select(User).filter(
-                db.func.lower(User.username) == db.func.lower(username)
-            )
+            select(User).where(db.func.lower(User.username) == db.func.lower(username))
         ).scalar()
         if user:
             return abort(403, "That username has already been taken, sorry D:")
@@ -230,9 +229,9 @@ def create_app(test_config=None):
         password = hashlib.md5(request.form["password"].encode("utf8")).hexdigest()
 
         user = db.one_or_404(
-            db.select(User)
-            .filter(db.func.lower(User.username) == db.func.lower(username))
-            .filter(User.password == password),
+            select(User)
+            .where(db.func.lower(User.username) == db.func.lower(username))
+            .where(User.password == password),
             description="No user was found with that username + password",
         )
         session["user_id"] = user.id
@@ -262,9 +261,9 @@ def create_app(test_config=None):
     @login_required
     def toggle():
         avatar = db.one_or_404(
-            db.select(Avatar)
-            .filter(Avatar.id == int(request.args["avatar_id"]))
-            .filter(Avatar.owner_id == g.user.id)
+            select(Avatar)
+            .where(Avatar.id == int(request.args["avatar_id"]))
+            .where(Avatar.owner_id == g.user.id)
         )
 
         avatar.enabled = not avatar.enabled
@@ -285,9 +284,9 @@ def create_app(test_config=None):
     @login_required
     def delete():
         avatar = db.one_or_404(
-            db.select(Avatar)
-            .filter(Avatar.id == int(request.args["avatar_id"]))
-            .filter(Avatar.owner_id == g.user.id)
+            select(Avatar)
+            .where(Avatar.id == int(request.args["avatar_id"]))
+            .where(Avatar.owner_id == g.user.id)
         )
         db.session.delete(avatar)
         db.session.commit()

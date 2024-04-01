@@ -5,6 +5,10 @@
 		"dockerfile": "../Dockerfile"
 	},
 
+	"updateContentCommand": {
+		"backend": "pip install -e '.[dev]'"
+	},
+
 	"customizations": {
 		"vscode": {
 			"extensions": [

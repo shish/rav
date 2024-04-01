@@ -1,9 +1,9 @@
-import os
 import hashlib
 import io
+import os
 
-from PIL import Image
 from flask_sqlalchemy import SQLAlchemy
+from PIL import Image
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
