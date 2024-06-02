@@ -1,7 +1,6 @@
 FROM python:3.11-slim
 EXPOSE 8000
-#RUN apt update && apt install -y curl
-#HEALTHCHECK --interval=1m --timeout=3s CMD curl --fail http://127.0.0.1:8000/ || exit 1
+RUN apt update && apt install -y rsync && rm -rf /var/lib/apt/lists/*
 VOLUME /data
 ENV PYTHONUNBUFFERED 1
 
