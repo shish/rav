@@ -8,9 +8,9 @@ on:
 
 jobs:
   pytest:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -24,16 +24,16 @@ jobs:
           pytest
 
   black:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
       - uses: psf/black@stable
         with:
           options: "--check --diff"
           src: "./rav2"
 
   ruff:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
@@ -49,9 +49,9 @@ jobs:
           ruff check --output-format=github rav2
 
   mypy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -65,14 +65,14 @@ jobs:
 
   publish:
     if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs:
       - pytest
       - black
       - ruff
       - mypy
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@main
         with:
