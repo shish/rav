@@ -6,7 +6,7 @@ authors = [
 ]
 description = "Random Avatar Hosting"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.14"
 dependencies = [
     "flask",
     "Flask-SQLAlchemy",
@@ -33,7 +33,7 @@ source = ["rav2"]
 
 [tool.black]
 line-length = 88
-target-version = ['py38']
+target-version = ['py314']
 extend-exclude = '''
 /(
   | venv
