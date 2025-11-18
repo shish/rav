@@ -1,8 +1,8 @@
-FROM python:3.11-slim
+FROM python:3.14-slim
 EXPOSE 8000
 RUN apt update && apt install -y rsync && rm -rf /var/lib/apt/lists/*
 VOLUME /data
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 
 COPY . /app
 WORKDIR /app
