@@ -13,7 +13,7 @@ dependencies = [
     "Pillow",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
     "black",
     "ruff",

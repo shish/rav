@@ -2,9 +2,9 @@ Install:
 ```
 mkdir data
 echo "Some secret thing" > data/secret.txt
-python3 -m venv venv
-source venv/bin/activate
-pip install -e '.[dev]'
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --group dev -e .
 flask --app rav2 init-db
 ```
 
