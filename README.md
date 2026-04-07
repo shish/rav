@@ -2,20 +2,18 @@ Install:
 ```
 mkdir data
 echo "Some secret thing" > data/secret.txt
-python3 -m venv .venv
-source .venv/bin/activate
-pip install --group dev -e .
-flask --app rav2 init-db
+uv run flask --app rav2 init-db
 ```
 
 Run:
 ```
-flask --app rav2 --debug run
+uv run flask --app rav2 --debug run
 ```
 
 Test:
 ```
-black .
-mypy rav2
-pytest
+uv run ruff format
+uv run ruff check
+uv run pytest
+uv run ty check
 ```

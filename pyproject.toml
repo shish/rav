@@ -15,9 +15,8 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "black",
     "ruff",
-    "mypy",
+    "ty",
     "pytest-cov",
     "types-Pillow",
 ]
@@ -31,20 +30,8 @@ addopts = "--cov --cov-report term-missing --cov-fail-under 95"
 [tool.coverage.run]
 source = ["rav2"]
 
-[tool.black]
+[tool.ruff]
 line-length = 88
-target-version = ['py314']
-extend-exclude = '''
-/(
-  | venv
-)/
-'''
-
-[tool.isort]
-profile = "black"
-
-[tool.mypy]
-files = "rav2"
 
 [tool.ruff.lint]
 ignore = [
