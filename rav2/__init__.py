@@ -305,7 +305,7 @@ def create_app(test_config=None):
     @login_required
     def upload():
         f = request.files["avatar_data"]
-        name = f.filename
+        name = f.filename or "avatar.png"
         data = f.read()
 
         app.logger.info("Avatar uploaded: " + name)

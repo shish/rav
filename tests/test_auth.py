@@ -1,6 +1,6 @@
 import pytest
-from flask import g, session, Flask
-from flask.testing import FlaskClient, FlaskCliRunner
+from flask import Flask, g, session
+from flask.testing import FlaskClient
 
 from rav2.models import db
 
