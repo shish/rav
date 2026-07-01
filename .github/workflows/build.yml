@@ -10,28 +10,28 @@ jobs:
   test:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v8.1.0
       - run: uv run pytest
 
   format:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v8.1.0
       - run: uv run ruff format --check --diff
 
   lint:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v8.1.0
       - run: uv run ruff check --output-format=github
 
   types:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v8.1.0
       - run: uv run ty check
 
@@ -44,7 +44,7 @@ jobs:
       - lint
       - types
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@main
         with:
