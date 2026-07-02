@@ -8,4 +8,4 @@ COPY . /app
 WORKDIR /app
 RUN uv sync --locked
 RUN ln -s /data /app/data
-CMD ["uv", "run", "flask", "--app", "rav2", "run", "-h", "0.0.0.0", "-p", "8000"]
+CMD ["uv", "run", "gunicorn", "-w", "4", "rav2:create_app()", "-b", "0.0.0.0:8000", "--access-logfile", "-"]
