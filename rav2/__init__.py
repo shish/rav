@@ -17,6 +17,7 @@ from flask import (
     url_for,
 )
 from sqlalchemy import select, text
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from .models import Avatar, User, db
 
@@ -28,6 +29,7 @@ def create_app(test_config=None):
     # Load config
 
     app = Flask(__name__, instance_path=os.path.abspath("./data"))
+    app = ProxyFix(app, x_for=1, x_proto=1)
     if not os.path.exists("./data"):  # pragma: no cover
         os.makedirs("./data")
     if not os.path.exists("./data/secret.txt"):  # pragma: no cover
