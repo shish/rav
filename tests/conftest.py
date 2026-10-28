@@ -36,15 +36,14 @@ def app():
 
 
 @pytest.fixture
-def client(app: Flask) -> t.Generator[FlaskClient, None, None]:
-    with app.app_context():
-        with app.test_client() as c:
-            c.get("/")
-            yield c
+def client(app: Flask) -> t.Generator[FlaskClient]:
+    with app.app_context(), app.test_client() as c:
+        c.get("/")
+        yield c
 
 
 @pytest.fixture
-def user_client(client: FlaskClient) -> t.Generator[FlaskClient, None, None]:
+def user_client(client: FlaskClient) -> t.Generator[FlaskClient]:
     client.post("/login", data={"username": "test", "password": "test"})
     yield client
 

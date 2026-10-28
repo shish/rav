@@ -1,6 +1,8 @@
-from flask.testing import FlaskClient
-from rav2.models import Avatar
 from unittest.mock import patch
+
+from flask.testing import FlaskClient
+
+from rav2.models import Avatar
 
 
 def test_favicon(client: FlaskClient):

@@ -42,7 +42,7 @@ class User(db.Model):  # type: ignore
     @property
     def common_size(self) -> str:
         # FIXME: incorrect, this takes the first size...
-        sizes = ["%dx%d" % (a.width, a.height) for a in self.avatars]
+        sizes = [f"{a.width}x{a.height}" for a in self.avatars]
         return sizes[0] if sizes else "0x0"
 
 

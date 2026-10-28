@@ -1,5 +1,5 @@
-import io
 import base64
+import io
 
 from flask import g, session, url_for
 from flask.testing import FlaskClient

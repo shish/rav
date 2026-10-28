@@ -1,7 +1,6 @@
 import functools
 import hashlib
 import os
-import typing as t
 
 import click
 from flask import (
@@ -122,7 +121,7 @@ def create_app(test_config=None):
     @app.route("/<path>.<ext>")
     @app.route("/<path>/<name>.<ext>")
     def avatar(
-        path: str, name: t.Optional[str] = None, ext: t.Optional[str] = None
+        path: str, name: str | None = None, ext: str | None = None
     ) -> Response:
         if len(path) == 32:
             avatar = db.first_or_404(select(Avatar).where(Avatar.hash == path))
