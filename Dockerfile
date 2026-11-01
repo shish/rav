@@ -1,4 +1,4 @@
-FROM python:3.14-slim
+FROM python:3.15-slim
 EXPOSE 8000
 VOLUME /data
 ENV PYTHONUNBUFFERED=1 UV_NO_DEV=1
